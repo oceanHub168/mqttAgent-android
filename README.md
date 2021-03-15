@@ -22,9 +22,17 @@ allprojects {
 
 # 方法 
 
+- 方法说明：
+
      class MqttWarp{
 
-
+         private Messageable  messageableCallBack
+         
+         public void setMessageCallback(Messageable msgCallback)
+         {
+            this.messageableCallBack=msgCallback;
+         }
+         
         /**
          * 
          * @param conext  上下文
@@ -65,4 +73,30 @@ allprojects {
         private native void stop(long handler);
 
     }
+    
+    
+    
+        public  interface Messageable {
+
+            
+            /**
+             *
+             *  接受云端的消息
+             * @param topic  返回的topic
+             *  @param topic  接受的数据
+             *  
+             */
+            public void onReceiverData(String topic, String msg);
+
+
+        }
+        
+       
+  - 具体实现：
+        
+        1.自定义类实现Messageable接口,接受收到的数据
+        2.创建实例对象 MqttWarp mqttAgent=new MqttWarp();
+          mqttAgent.setMessageCallback(自定义的类实现Messageable接口);
+
+
 
